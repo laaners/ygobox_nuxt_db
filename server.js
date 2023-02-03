@@ -42,23 +42,6 @@ function execPromise(cmd) {
 	});
 }
 
-function csvJSON(csv) {
-	const lines = csv.toString().split("\n")
-	const result = []
-	const headers = lines[0].split("	")
-	for (let i = 1; i < lines.length; i++) {
-		const obj = {}
-		const currentline = lines[i].split("	")
-		for (let j = 0; j < headers.length; j++) {
-			obj[headers[j]] =
-				headers[j] === "id" ? +currentline[j] : currentline[j]
-		}
-		result.push(obj)
-	}
-	console.log("Parsed a csv")
-	return result
-}
-
 async function getDB(dbFile, dbURL) {
 	await execPromise(`curl -L -o "${dbFile}" "${dbURL}"`);
 	return new Promise((resolve, reject) => {
@@ -87,8 +70,8 @@ async function initData() {
 		getDB("cardsCH.cdb","https://github.com/mycard/ygopro/blob/server/cards.cdb?raw=true")
 	]);
 
-	if(cardsIT.length === 0) cardsIT = csvJSON(fs.readFileSync("./server/data/cardsIT.txt"))
-	if(cardsCH.length === 0) cardsCH = csvJSON(fs.readFileSync("./server/data/cardsCH.txt"))
+	if(cardsIT.length === 0) cardsIT = require("./cardsIT.json")
+	if(cardsCH.length === 0) cardsCH = require("./cardsCH.json")
 
 	return {
 		cardsCH,
@@ -110,6 +93,14 @@ function foreign(arr, id) {
 
 async function initServer() {
     const { cardsCH, cardsIT } = await initData()
+
+	app.get("/iteff", (req, res) => {
+		return res.json(cardsIT)
+	})
+
+	app.get("/cheff", (req, res) => {
+		return res.json(cardsCH)
+	})
 
 	app.get("/cheff/:id", (req, res) => {
 		const id = +req.params.id
