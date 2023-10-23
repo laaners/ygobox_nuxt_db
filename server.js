@@ -91,35 +91,32 @@ function foreign(arr, id) {
 	return { name: card.name, desc: card.desc }
 }
 
-async function initServer() {
-    const { cardsCH, cardsIT } = await initData()
+const { cardsCH, cardsIT } = initData()
 
-	app.get('/', (req, res) => {
-		res.status(200).json('Welcome, your app is working well');
-	})
+app.get('/', (req, res) => {
+	res.status(200).json('Welcome, your app is working well');
+})
 
-	app.get("/iteff", (req, res) => {
-		return res.json(cardsIT)
-	})
+app.get("/iteff", (req, res) => {
+	return res.json(cardsIT)
+})
 
-	app.get("/cheff", (req, res) => {
-		return res.json(cardsCH)
-	})
+app.get("/cheff", (req, res) => {
+	return res.json(cardsCH)
+})
 
-	app.get("/cheff/:id", (req, res) => {
-		const id = +req.params.id
-		return res.json(foreign(cardsCH,id))
-	})
+app.get("/cheff/:id", (req, res) => {
+	const id = +req.params.id
+	return res.json(foreign(cardsCH,id))
+})
 
-	app.get("/iteff/:id", (req, res) => {
-		const id = +req.params.id
-		return res.json(foreign(cardsIT,id))
-	})
+app.get("/iteff/:id", (req, res) => {
+	const id = +req.params.id
+	return res.json(foreign(cardsIT,id))
+})
 
-	const httpServer = http.createServer(app);
-    httpServer.listen(port, function() { 
-        console.log(`In ascolto sulla porta ${port}`);
-    });
-}
+app.listen(port, () => {
+	console.log(`In ascolto sulla porta ${port}`);
+});
 
-initServer()
+module.exports = app
