@@ -1,7 +1,6 @@
 {
   "name": "box_nuxt_db",
   "version": "1.0.0",
-  "description": "",
   "main": "0snippets.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,5 +14,16 @@
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "sqlite3": "^5.1.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laaners/ygobox_nuxt_db.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/laaners/ygobox_nuxt_db/issues"
+  },
+  "homepage": "https://github.com/laaners/ygobox_nuxt_db#readme",
+  "description": ""
 }

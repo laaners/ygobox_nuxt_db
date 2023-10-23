@@ -94,6 +94,10 @@ function foreign(arr, id) {
 async function initServer() {
     const { cardsCH, cardsIT } = await initData()
 
+	app.get('/', (req, res) => {
+		res.status(200).json('Welcome, your app is working well');
+	})
+
 	app.get("/iteff", (req, res) => {
 		return res.json(cardsIT)
 	})
